@@ -9,9 +9,8 @@ namespace Battleship
         
         public const int HITS = 0;
 
-        public int[,] gameBoard = new int[10, 10]
+        public int[,] GAME_BOARD = new int[10, 10]
            {
-                {00,01,02,03,04,05,06,07,08,09 },
                 {10,11,12,13,14,15,16,17,18,19 },
                 {20,21,22,23,24,25,26,27,28,29 },
                 {30,31,32,33,34,35,36,37,38,39 },
@@ -20,16 +19,14 @@ namespace Battleship
                 {60,61,62,63,64,65,66,67,68,69 },
                 {70,71,72,73,74,75,76,77,78,79 },
                 {80,81,82,83,84,85,86,87,88,89 },
-                {90,91,92,93,94,95,96,97,98,99 }
+                {90,91,92,93,94,95,96,97,98,99 },
+                {100,101,102,103,104,105,106,107,108,109 }
 
            };
 
-        public int[,] gameBoard1 = new int[10, 10];
 
-        public int[] shipCoordinates = new int[5]
-        {
-            00,01,02,03,04
-        };
+        int[] shipCoordinates = new int[5];
+
 
         bool isSunk = false;
 
@@ -42,70 +39,84 @@ namespace Battleship
             const int ROW_PLACEMENT = 10;
             const int COLUMN_PLACEMENT = 1;
             Random random = new Random();
-            int firstColumn = random.Next(0, 10);
-            int firstRow = random.Next(0, 10);
-            Console.WriteLine($"first column is {firstColumn}");
-            Console.WriteLine($"first row is {firstRow}");
-            //int firstCoordinate = int.Parse(firstColumn.ToString() + firstRow.ToString());
-            //Console.WriteLine($"first coordinates are {firstCoordinate}");
-            int[] coordinates = new int[5] { 0, 0, 0, 0, 0 };
-            for (int i = 0; i < gameBoard.GetLength(0); i++)
-            {
-                
-                
-                for (int j = 0; j < gameBoard.GetLength(1); j++)
-                {
-                    Console.Write(gameBoard[i, j]);
-                    if (firstRow == i && firstColumn == j)
-                    {
-                        coordinates[0] = gameBoard[i, j];
-                        Console.WriteLine(" " + coordinates[0] + "is it working?");
-                    }
-
-                }
-            }
-           
-            
-            
+            int firstRow;
+            int firstColumn;
             int coinFlip = random.Next(2);
             Console.WriteLine($"the coinflip result is {coinFlip}");
             
+
             if (coinFlip == 0)
             {
-                for (int i = 1; i < coordinates.Length; i++)
+               
+                firstRow = random.Next(0, 6);
+                firstColumn = random.Next(0, 10);
+
+                for (int i = 0; i < GAME_BOARD.GetLength(0); i++)
                 {
-                    coordinates[i] = firstRow += ROW_PLACEMENT;
+
+
+                    for (int j = 0; j < GAME_BOARD.GetLength(1); j++)
+                    {
+                        //Console.Write(GAME_BOARD[i, j]);
+                        if (firstRow == i && firstColumn == j)
+                        {
+                            shipCoordinates[0] = GAME_BOARD[i, j];
+                            Console.WriteLine(" " + shipCoordinates[0] + " is it working?");
+                        }
+
+                    }
+                }
+                for (int i = 1; i < shipCoordinates.Length; i++)
+                {
+                    
+                    shipCoordinates[i] = shipCoordinates[i - 1] + ROW_PLACEMENT;
 
                 }
-                foreach (var item in coordinates)
-                {
-                    Console.WriteLine(item);
-                }
+                
             } else if (coinFlip == 1)
             {
-                for (int i = 1; i < coordinates.Length; i++)
+                firstRow = random.Next(0, 10);
+                firstColumn = random.Next(0, 6);
+                for (int i = 0; i < GAME_BOARD.GetLength(0); i++)
                 {
-                    coordinates[i] = firstColumn += COLUMN_PLACEMENT;
+
+
+                    for (int j = 0; j < GAME_BOARD.GetLength(1); j++)
+                    {
+                        //Console.Write(GAME_BOARD[i, j]);
+                        if (firstRow == i && firstColumn == j)
+                        {
+                            shipCoordinates[0] = GAME_BOARD[i, j];
+                            Console.WriteLine(" " + shipCoordinates[0] + " is it working?");
+                        }
+
+                    }
                 }
-                foreach (var item in coordinates)
+                for (int i = 1; i < shipCoordinates.Length; i++)
                 {
-                    Console.WriteLine(item);
+                   
+
+                    shipCoordinates[i] = shipCoordinates[i - 1] + COLUMN_PLACEMENT;
                 }
+                
+            }
+            foreach (var item in shipCoordinates)
+            {
+                Console.WriteLine(item);
             }
         }
 
         public void CheckGuess(int guess)
         {
             Console.WriteLine("the guess is " + guess);
-            for (int i = 0; i < shipCoordinates.Length; i++)
+            
+            foreach (var coordinate in shipCoordinates)
             {
-                if (guess == shipCoordinates[i])
+                if (guess == coordinate)
                 {
                     Console.WriteLine("hit!");
-                } else
-                {
-                    Console.WriteLine("miss");
                 }
+                Console.WriteLine("miss!");
             }
         }
         public void ConvertLetterToNumber(string guess)
@@ -115,7 +126,7 @@ namespace Battleship
             {
                 'A','B','C','D','E','F','G','H','I','J'
             };
-            int[] numbers = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            int[] numbers = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
 
             for (int i = 0; i < letters.Length; i++)
@@ -137,21 +148,11 @@ namespace Battleship
 
             }
 
-            //foreach (var letter in letters)
-            //{
-            //    if (_guess != letter)
-            //        Console.WriteLine("Sorry, you must enter A-J");
-            //    else
-            //        Console.WriteLine($"ok you matched {_guess} with {letter}");
-            //    Console.ReadLine();
-            //}
+         
         
 
         }
-        //public int drawShipOnBoard()
-        //{
-
-        //}
+      
 
     }
 }
