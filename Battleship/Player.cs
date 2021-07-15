@@ -2,7 +2,7 @@
 {
     class Player {
 
-        const int GUESSES = 8;
+        public int guesses = 8;
 
         public void FireShot(string guess)
         {

@@ -7,7 +7,9 @@ namespace Battleship
     public class Game
     {
         
-        public const int HITS = 0;
+        public int hits = 0;
+        public int guesses = 8;
+        public bool isSunk = false;
 
         public int[,] GAME_BOARD = new int[10, 10]
            {
@@ -26,9 +28,10 @@ namespace Battleship
 
 
         int[] shipCoordinates = new int[5];
+        List<int> hitCoordinates = new List<int>();
 
 
-        bool isSunk = false;
+        
 
         public Game()
         {
@@ -42,7 +45,7 @@ namespace Battleship
             int firstRow;
             int firstColumn;
             int coinFlip = random.Next(2);
-            Console.WriteLine($"the coinflip result is {coinFlip}");
+          
             
 
             if (coinFlip == 0)
@@ -109,14 +112,34 @@ namespace Battleship
         public void CheckGuess(int guess)
         {
             Console.WriteLine("the guess is " + guess);
+            CheckHitList(guess);
             
             foreach (var coordinate in shipCoordinates)
             {
                 if (guess == coordinate)
                 {
                     Console.WriteLine("hit!");
+                    hitCoordinates.Add(guess);
+                    hits++;
+                    guesses--;
+                    return;
                 }
                 Console.WriteLine("miss!");
+                guesses--;
+                
+            }
+        }
+
+        public void CheckHitList(int guess)
+        {
+            foreach (var coordinate in hitCoordinates)
+            {
+                if (guess == coordinate)
+                {
+                    Console.WriteLine("you already guessed this");
+                    
+                    
+                }
             }
         }
         public void ConvertLetterToNumber(string guess)
@@ -135,8 +158,6 @@ namespace Battleship
                 {
                     Console.WriteLine($"you matched {guess} with {letters[i]}");
                     int convertedNumber = numbers[i];
-                    //Console.WriteLine($"{letters[i]} is equal to {convertedNumber}");
-                    //Console.WriteLine($"original guess is {guess}");
                     guess = $"{numbers[i]}{guess[1]}";
                     int parsedGuess = int.Parse(guess);
                     Console.WriteLine($"guess is now {parsedGuess}");
