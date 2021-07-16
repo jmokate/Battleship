@@ -64,7 +64,7 @@ namespace Battleship
                         if (firstRow == i && firstColumn == j)
                         {
                             shipCoordinates[0] = GAME_BOARD[i, j];
-                            Console.WriteLine(" " + shipCoordinates[0] + " is it working?");
+                            //Console.WriteLine(" " + shipCoordinates[0] + " is it working?");
                         }
 
                     }
@@ -90,7 +90,7 @@ namespace Battleship
                         if (firstRow == i && firstColumn == j)
                         {
                             shipCoordinates[0] = GAME_BOARD[i, j];
-                            Console.WriteLine(" " + shipCoordinates[0] + " is it working?");
+                            //Console.WriteLine(" " + shipCoordinates[0] + " is it working?");
                         }
 
                     }
@@ -112,7 +112,10 @@ namespace Battleship
         public void CheckGuess(int guess)
         {
             Console.WriteLine("the guess is " + guess);
-            CheckHitList(guess);
+            if (CheckHitList(guess))
+            {
+                return;
+            }
             
             foreach (var coordinate in shipCoordinates)
             {
@@ -122,25 +125,32 @@ namespace Battleship
                     hitCoordinates.Add(guess);
                     hits++;
                     guesses--;
+                    Console.WriteLine($"GUESSES LEFT {guesses}");
+                    if (hits == 5)
+                    {
+                        isSunk = true;
+                    }
                     return;
                 }
-                Console.WriteLine("miss!");
-                guesses--;
-                
             }
+            Console.WriteLine("miss!");
+            guesses--;
+            Console.WriteLine($"GUESSES LEFT {guesses}");
         }
 
-        public void CheckHitList(int guess)
+        public bool CheckHitList(int guess)
         {
+            //bool isHit = false;
             foreach (var coordinate in hitCoordinates)
             {
                 if (guess == coordinate)
                 {
                     Console.WriteLine("you already guessed this");
-                    
-                    
+                    return true;
                 }
+          
             }
+            return false;
         }
         public void ConvertLetterToNumber(string guess)
         {
@@ -157,7 +167,7 @@ namespace Battleship
                 if(_guess == letters[i])
                 {
                     Console.WriteLine($"you matched {guess} with {letters[i]}");
-                    int convertedNumber = numbers[i];
+                   // int convertedNumber = numbers[i];
                     guess = $"{numbers[i]}{guess[1]}";
                     int parsedGuess = int.Parse(guess);
                     Console.WriteLine($"guess is now {parsedGuess}");
@@ -165,7 +175,7 @@ namespace Battleship
                     return;
 
                 }
-                else { Console.WriteLine("no match"); }
+               
 
             }
 
