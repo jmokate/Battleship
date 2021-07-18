@@ -8,7 +8,7 @@ namespace Battleship
         {
             Player player = new Player();
             Game game = new Game();
-            game.SetCoordinates();
+            game.SetShipCoordinates();
 
            
             Console.WriteLine("Welcome to Battleship!\nHere are the Rules: ");
@@ -35,15 +35,8 @@ namespace Battleship
                 }
                 
                 Console.WriteLine(guess);
-                game.ConvertLetterToNumber(guess);
+                game.CheckGuess(guess);
             }
-
-            
-
-            
-            //player.FireShot(guess);
-
-            
         }
     }
 }

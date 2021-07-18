@@ -37,7 +37,7 @@ namespace Battleship
         {
 
         }
-        public void SetCoordinates()
+        public void SetShipCoordinates()
         {
             const int ROW_PLACEMENT = 10;
             const int COLUMN_PLACEMENT = 1;
@@ -60,11 +60,9 @@ namespace Battleship
 
                     for (int j = 0; j < GAME_BOARD.GetLength(1); j++)
                     {
-                        //Console.Write(GAME_BOARD[i, j]);
                         if (firstRow == i && firstColumn == j)
                         {
                             shipCoordinates[0] = GAME_BOARD[i, j];
-                            //Console.WriteLine(" " + shipCoordinates[0] + " is it working?");
                         }
 
                     }
@@ -86,11 +84,9 @@ namespace Battleship
 
                     for (int j = 0; j < GAME_BOARD.GetLength(1); j++)
                     {
-                        //Console.Write(GAME_BOARD[i, j]);
                         if (firstRow == i && firstColumn == j)
                         {
                             shipCoordinates[0] = GAME_BOARD[i, j];
-                            //Console.WriteLine(" " + shipCoordinates[0] + " is it working?");
                         }
 
                     }
@@ -103,26 +99,28 @@ namespace Battleship
                 }
                 
             }
-            foreach (var item in shipCoordinates)
-            {
-                Console.WriteLine(item);
-            }
+            //foreach (var item in shipCoordinates)
+            //{
+            //    Console.WriteLine(item);
+            //}
         }
 
-        public void CheckGuess(int guess)
+        public void CheckGuess(string guess)
         {
-            Console.WriteLine("the guess is " + guess);
-            if (CheckHitList(guess))
+            
+            int parsedGuess = ConvertLetterToNumber(guess);
+            Console.WriteLine("the guess is " + parsedGuess);
+            if (CheckHitList(parsedGuess))
             {
                 return;
             }
             
             foreach (var coordinate in shipCoordinates)
             {
-                if (guess == coordinate)
+                if (parsedGuess == coordinate)
                 {
                     Console.WriteLine("hit!");
-                    hitCoordinates.Add(guess);
+                    hitCoordinates.Add(parsedGuess);
                     hits++;
                     guesses--;
                     Console.WriteLine($"GUESSES LEFT {guesses}");
@@ -140,7 +138,6 @@ namespace Battleship
 
         public bool CheckHitList(int guess)
         {
-            //bool isHit = false;
             foreach (var coordinate in hitCoordinates)
             {
                 if (guess == coordinate)
@@ -152,9 +149,10 @@ namespace Battleship
             }
             return false;
         }
-        public void ConvertLetterToNumber(string guess)
+        public int ConvertLetterToNumber(string guess)
         {
-            char _guess = guess[0];
+            char firstLetter = guess[0];
+            int parsedGuess;
             char[] letters = new char[]
             {
                 'A','B','C','D','E','F','G','H','I','J'
@@ -164,26 +162,19 @@ namespace Battleship
 
             for (int i = 0; i < letters.Length; i++)
             {
-                if(_guess == letters[i])
+                if(firstLetter == letters[i])
                 {
                     Console.WriteLine($"you matched {guess} with {letters[i]}");
-                   // int convertedNumber = numbers[i];
                     guess = $"{numbers[i]}{guess[1]}";
-                    int parsedGuess = int.Parse(guess);
+                    parsedGuess = int.Parse(guess);
                     Console.WriteLine($"guess is now {parsedGuess}");
-                    CheckGuess(parsedGuess);
-                    return;
+                    return parsedGuess;
 
-                }
+                } 
                
 
             }
-
-         
-        
-
+            return 0;
         }
-      
-
     }
 }
