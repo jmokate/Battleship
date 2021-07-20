@@ -30,13 +30,6 @@ namespace Battleship
         int[] shipCoordinates = new int[5];
         List<int> hitCoordinates = new List<int>();
 
-
-        
-
-        public Game()
-        {
-
-        }
         public void SetShipCoordinates()
         {
             const int ROW_PLACEMENT = 10;
@@ -46,7 +39,6 @@ namespace Battleship
             int firstColumn;
             int coinFlip = random.Next(2);
           
-            
 
             if (coinFlip == 0)
             {
@@ -99,17 +91,12 @@ namespace Battleship
                 }
                 
             }
-            //foreach (var item in shipCoordinates)
-            //{
-            //    Console.WriteLine(item);
-            //}
         }
 
         public void CheckGuess(string guess)
         {
             
             int parsedGuess = ConvertLetterToNumber(guess);
-            Console.WriteLine("the guess is " + parsedGuess);
             if (CheckHitList(parsedGuess))
             {
                 return;
@@ -164,10 +151,8 @@ namespace Battleship
             {
                 if(firstLetter == letters[i])
                 {
-                    Console.WriteLine($"you matched {guess} with {letters[i]}");
                     guess = $"{numbers[i]}{guess[1]}";
                     parsedGuess = int.Parse(guess);
-                    Console.WriteLine($"guess is now {parsedGuess}");
                     return parsedGuess;
 
                 } 

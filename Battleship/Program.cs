@@ -6,13 +6,10 @@ namespace Battleship
     {
         static void Main(string[] args)
         {
-            Player player = new Player();
             Game game = new Game();
             game.SetShipCoordinates();
-
-           
             Console.WriteLine("Welcome to Battleship!\nHere are the Rules: ");
-            Console.WriteLine("The game is played on a 10 x 10 grid, vertically from 'A' to 'J' and horizontally from '0' to '10'. An example guess would be 'C8'.");
+            Console.WriteLine("The game is played on a 10 x 10 grid, vertically from 'A' to 'J' and horizontally from '0' to '10'.\nAn example guess would be 'C8'.");
             Console.WriteLine("Try to sink the ship by guessing from 'A0' to 'J10'. You have 8 shots to fire, let's start!");
             while (!game.isSunk || game.guesses >= 0)
             {
@@ -34,7 +31,6 @@ namespace Battleship
                     Console.WriteLine("enter between A0 and J10");
                 }
                 
-                Console.WriteLine(guess);
                 game.CheckGuess(guess);
             }
         }
