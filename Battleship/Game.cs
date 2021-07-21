@@ -26,9 +26,17 @@ namespace Battleship
 
            };
 
+        char[] letters = new char[]
+            {
+                'A','B','C','D','E','F','G','H','I','J'
+            };
+
+        int[] numbers = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
 
         int[] shipCoordinates = new int[5];
-        List<int> hitCoordinates = new List<int>();
+        List<string> hitCoordinates = new List<string>();
+        List<string> missedCoordinates = new List<string>();
 
         public void SetShipCoordinates()
         {
@@ -89,7 +97,11 @@ namespace Battleship
 
                     shipCoordinates[i] = shipCoordinates[i - 1] + COLUMN_PLACEMENT;
                 }
-                
+
+            }
+            foreach (var coordinate in shipCoordinates)
+            {
+                Console.WriteLine(coordinate);
             }
         }
 
@@ -97,20 +109,21 @@ namespace Battleship
         {
             
             int parsedGuess = ConvertLetterToNumber(guess);
-            if (CheckHitList(parsedGuess))
-            {
-                return;
-            }
+            //if (CheckHitList(parsedGuess))
+            //{
+            //    return;
+            //}
             
             foreach (var coordinate in shipCoordinates)
             {
                 if (parsedGuess == coordinate)
                 {
-                    Console.WriteLine("hit!");
-                    hitCoordinates.Add(parsedGuess);
+                    Console.WriteLine("HIT!\n");
+                    hitCoordinates.Add(guess);
                     hits++;
                     guesses--;
-                    Console.WriteLine($"GUESSES LEFT {guesses}");
+                    DisplayHitsAndMisses();
+                    Console.WriteLine($"GUESSES LEFT: {guesses}\n");
                     if (hits == 5)
                     {
                         isSunk = true;
@@ -118,33 +131,32 @@ namespace Battleship
                     return;
                 }
             }
-            Console.WriteLine("miss!");
+            Console.WriteLine("MISS!\n");
+            missedCoordinates.Add(guess);
+            DisplayHitsAndMisses();
             guesses--;
-            Console.WriteLine($"GUESSES LEFT {guesses}");
+            Console.WriteLine($"GUESSES LEFT: {guesses}\n");
         }
 
-        public bool CheckHitList(int guess)
-        {
-            foreach (var coordinate in hitCoordinates)
-            {
-                if (guess == coordinate)
-                {
-                    Console.WriteLine("you already guessed this");
-                    return true;
-                }
+        //public bool CheckHitList(int parsedGuess)
+        //{
+        //    foreach (var coordinate in hitCoordinates)
+        //    {
+        //        if (parsedGuess == coordinate)
+        //        {
+        //            Console.WriteLine("you already guessed this");
+        //            return true;
+        //        }
           
-            }
-            return false;
-        }
+        //    }
+        //    return false;
+        //}
         public int ConvertLetterToNumber(string guess)
         {
             char firstLetter = guess[0];
             int parsedGuess;
-            char[] letters = new char[]
-            {
-                'A','B','C','D','E','F','G','H','I','J'
-            };
-            int[] numbers = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            
+           
 
 
             for (int i = 0; i < letters.Length; i++)
@@ -160,6 +172,14 @@ namespace Battleship
 
             }
             return 0;
+        }
+
+        public void DisplayHitsAndMisses()
+        {
+            
+            Console.WriteLine($"HITS: {string.Join(", ", hitCoordinates)}");
+            Console.WriteLine($"MISSES: {string.Join(", ", missedCoordinates)}");
+            
         }
     }
 }
