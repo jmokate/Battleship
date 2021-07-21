@@ -15,7 +15,7 @@ namespace Battleship
             };
             Console.WriteLine("Welcome to Battleship!\nHere are the Rules: ");
             Console.WriteLine("The game is played on a 10 x 10 grid, vertically from 'A' to 'J' and horizontally from '0' to '10'.\nAn example guess would be 'C8'.");
-            Console.WriteLine("Try to sink the ship by guessing from 'A0' to 'J10'. You have 8 shots to fire, let's start!");
+            Console.WriteLine("Try to sink the ship by guessing from 'A0' to 'J10'. You have 8 shots to fire, let's start!\n");
             while (!game.isSunk || game.guesses >= 0)
             {
                 if (game.isSunk)
@@ -25,7 +25,7 @@ namespace Battleship
                 }
                 else if (game.guesses == 0)
                 {
-                    Console.WriteLine("You are out of guesses\nGame Over");
+                    Console.WriteLine("You are out of guesses!\nGame Over");
                     return;
                 }
 
@@ -33,7 +33,7 @@ namespace Battleship
                 guess = char.ToUpper(guess[0]) + guess.Substring(1);
                 if (string.IsNullOrEmpty(guess) || !letters.Contains(guess[0]))
                 {
-                    Console.WriteLine("Please enter between A0 and J10");
+                    Console.WriteLine("Please enter between A0 and J10\n");
                     
                 }
                 else

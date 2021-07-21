@@ -25,16 +25,13 @@ namespace Battleship
                 {100,101,102,103,104,105,106,107,108,109 }
 
            };
-
+        int[] shipCoordinates = new int[5];
         char[] letters = new char[]
             {
                 'A','B','C','D','E','F','G','H','I','J'
             };
 
         int[] numbers = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-
-
-        int[] shipCoordinates = new int[5];
         List<string> hitCoordinates = new List<string>();
         List<string> missedCoordinates = new List<string>();
 
@@ -93,15 +90,9 @@ namespace Battleship
                 }
                 for (int i = 1; i < shipCoordinates.Length; i++)
                 {
-                   
-
                     shipCoordinates[i] = shipCoordinates[i - 1] + COLUMN_PLACEMENT;
                 }
 
-            }
-            foreach (var coordinate in shipCoordinates)
-            {
-                Console.WriteLine(coordinate);
             }
         }
 
@@ -109,11 +100,6 @@ namespace Battleship
         {
             
             int parsedGuess = ConvertLetterToNumber(guess);
-            //if (CheckHitList(parsedGuess))
-            //{
-            //    return;
-            //}
-            
             foreach (var coordinate in shipCoordinates)
             {
                 if (parsedGuess == coordinate)
@@ -138,26 +124,11 @@ namespace Battleship
             Console.WriteLine($"GUESSES LEFT: {guesses}\n");
         }
 
-        //public bool CheckHitList(int parsedGuess)
-        //{
-        //    foreach (var coordinate in hitCoordinates)
-        //    {
-        //        if (parsedGuess == coordinate)
-        //        {
-        //            Console.WriteLine("you already guessed this");
-        //            return true;
-        //        }
-          
-        //    }
-        //    return false;
-        //}
+       
         public int ConvertLetterToNumber(string guess)
         {
             char firstLetter = guess[0];
             int parsedGuess;
-            
-           
-
 
             for (int i = 0; i < letters.Length; i++)
             {
@@ -168,18 +139,14 @@ namespace Battleship
                     return parsedGuess;
 
                 } 
-               
-
             }
             return 0;
         }
 
         public void DisplayHitsAndMisses()
         {
-            
             Console.WriteLine($"HITS: {string.Join(", ", hitCoordinates)}");
             Console.WriteLine($"MISSES: {string.Join(", ", missedCoordinates)}");
-            
         }
     }
 }
